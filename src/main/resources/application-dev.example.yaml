@@ -1,0 +1,21 @@
+server:
+  port: 8282
+spring:
+  application:
+    name: stripe-checkout-demo
+  datasource:
+    url: jdbc:postgresql://localhost:5432/change_me
+    username: change_me
+    password: change_me
+  jpa:
+    hibernate:
+      ddl-auto: update
+      open-in-view: false
+  flyway:
+    enabled: true
+
+stripe:
+  secret-key: sk_test_REPLACE_ME
+  webhook-secret: whsec_REPLACE_ME
+  success-url: http://localhost:8282/success.html?session_id={CHECKOUT_SESSION_ID}
+  cancel-url: http://localhost:8080/cancel.html
