@@ -70,4 +70,17 @@ public class Order {
     public String getPaymentIntentId() { return paymentIntentId; }
     public int getCheckoutAttempt() { return checkoutAttempt; }
     public Instant getCreatedAt() { return createdAt; }
+
+
+    public void attachSession(String sessionId, String url){
+        this.checkoutSessionId = sessionId;
+        this.checkoutUrl = url;
+    }
+
+    public void startNewAttempt(){
+        this.checkoutAttempt++;
+        this.checkoutSessionId=null;
+        this.checkoutUrl=null;
+        this.status= OrderStatus.PENDING;
+    }
 }
