@@ -3,6 +3,7 @@ package com.payment.stripecheckoutdemo.order;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -10,9 +11,10 @@ import java.util.UUID;
 public class OrderController {
 
     private final OrderService orderService;
-
-    public OrderController(OrderService orderService) {
+    private final CheckoutService checkoutService;
+    public OrderController(OrderService orderService , CheckoutService checkoutService) {
         this.orderService = orderService;
+        this.checkoutService= checkoutService;
     }
 
     @PostMapping
@@ -25,5 +27,10 @@ public class OrderController {
     @GetMapping("/{id}")
     public OrderResponse getOrder(@PathVariable UUID id) {
         return OrderResponse.of(orderService.getOrder(id));
+    }
+
+    @PostMapping("/{id}/checkout")
+    public Map<String, String> checkout(@PathVariable UUID id) {
+        return Map.of("url", checkoutService.createCheckoutUrl(id));
     }
 }
